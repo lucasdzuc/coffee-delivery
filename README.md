@@ -38,5 +38,5 @@ yarn dev
 
 ## 📄 Licença
 
-Esse projeto está sob a licença MIT. Ver [**LICENSE**]([LICENSE.md](https://github.com/lucasdzuc/coffee-delivery/blob/main/LICENSE)) para mais detalhes.
+Esse projeto está sob a licença MIT. Ver [**LICENSE**](https://github.com/lucasdzuc/coffee-delivery/blob/main/LICENSE) para mais detalhes.
 
