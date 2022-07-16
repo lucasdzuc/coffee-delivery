@@ -1,0 +1,78 @@
+import { QuantityInput } from "../../../../components/QuantityInput";
+import { RegularText, TitleText } from "../../../../components/Typeography";
+import { CoffeeCardContainer, Tags, Name, Description, CardFooter, AddCardWrapper } from "./styles";
+import { ShoppingCart } from 'phosphor-react';
+import { formatMoney } from "../../../../utils/formatMoney";
+import { useCart } from "../../../../hooks/useCart";
+import { useState } from "react";
+
+export interface Coffee {
+  id: number,
+  tags: string[],
+  name: string,
+  description: string,
+  photo: string,
+  price: number | any,
+}
+
+interface CoffeeProps {
+  coffee?: Coffee;
+}
+
+export function CoffeeCard({ coffee }: CoffeeProps){
+
+  const [quantity, setQuantity] = useState<number | any>(1);
+
+  function handleIncrease(){
+    setQuantity((state: any) => state + 1);
+  }
+
+  function handleDecrease(){
+    setQuantity((state: any) => state -1);
+  }
+
+  const { addCoffeeToCart } = useCart();
+
+  function handleAddToCart(){
+    const coffeeToAdd: any = {
+      ...coffee,
+      quantity
+    };
+    addCoffeeToCart(coffeeToAdd);
+  }
+
+  return (
+    <CoffeeCardContainer>
+      <img src={`/coffees/${coffee?.photo}`} />
+    
+      <Tags>
+        {coffee?.tags.map((tag: any) => ((
+          <span key={`${coffee?.id}${tag}`}>{tag}</span>
+        )))}
+      </Tags>
+
+      <Name>{coffee?.name}</Name>
+
+      <Description>{coffee?.description}</Description>
+
+      <CardFooter>
+        <div>
+          <RegularText size="s">R$</RegularText>
+          <TitleText size="m" color="text" as="strong">{formatMoney(coffee?.price)}</TitleText>
+        </div>
+
+        <AddCardWrapper>
+          <QuantityInput 
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+            quantity={quantity}
+          />
+
+          <button onClick={handleAddToCart}>
+            <ShoppingCart size={22} weight="fill" />
+          </button>
+        </AddCardWrapper>
+      </CardFooter>
+    </CoffeeCardContainer>
+  )
+}
